@@ -32,13 +32,15 @@ app.post('/ferrari-drivers', (req, res) => {
 })
 
 app.put('/ferrari-drivers/:id', (req, res) => {
-  Ferrari.findByIdAndUpdate(req.params.id, req.body, (err, fdriver) => {
+  Ferrari.findByIdAndUpdate(req.params.id, req.body, {new: true}, (err, fdriver) => {
     res.json(fdriver);
+    console.log(fdriver);
   })
 })
 
 app.delete('/ferrari-drivers/:id', (req, res) => {
   Ferrari.findById(req.params.id, (err, fdriver) => {
+    if (err) res.json({err: 'errors'})
     fdriver.remove((err, fdriver) => {
       res.json({message: 'Ferrari driver removed'});
     })
@@ -47,7 +49,7 @@ app.delete('/ferrari-drivers/:id', (req, res) => {
 
 app.get('/ferr-mostwins', (req, res) => {
   Ferrari.find().sort({raceWins: -1}).limit(1).exec((err, fdrivers) => {
-    console.log(fdrivers);
+    // console.log(fdrivers);
     res.json({data: fdrivers});
   });
 });
@@ -72,7 +74,7 @@ app.post('/mercedes-drivers', (req, res) => {
 })
 
 app.put('/mercedes-drivers/:id', (req, res) => {
-  Mercedes.findByIdAndUpdate(req.params.id, req.body, (err, mdriver) => {
+  Mercedes.findByIdAndUpdate(req.params.id, req.body, {new: true}, (err, mdriver) => {
     if (err) return res.send(err);
     res.json(mdriver);
   })
@@ -80,15 +82,16 @@ app.put('/mercedes-drivers/:id', (req, res) => {
 
 app.delete('/mercedes-drivers/:id', (req, res) => {
   Mercedes.findById(req.params.id, (err, mdriver) => {
+    if (err) res.json({err: 'errors'})
     mdriver.remove((err, mdriver) => {
-      res.json({message: 'Mecedes driver removed'});
+      res.json({message: 'Mercedes driver removed'});
     })
   })
 })
 
 app.get('/merc-mostwins', (req, res) => {
   Mercedes.find().sort({raceWins: -1}).limit(1).exec((err, mdrivers) => {
-    console.log(mdrivers);
+    // console.log(mdrivers);
     res.json({data: mdrivers});
   });
 });
