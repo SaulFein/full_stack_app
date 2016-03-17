@@ -7,8 +7,6 @@ chai.use(chaiHttp);
 let expect = chai.expect;
 var request = chai.request;
 let mongoose = require('mongoose');
-// let Ferrari = require(__dirname + '/../models/ferrari-f1-drivers');
-// let Mercedes = require(__dirname + '/../models/mercedes-f1-drivers');
 var port = 'localhost:3000';
 
 describe('testing functionality of the server', function() {
@@ -88,7 +86,6 @@ describe('testing functionality of the server', function() {
         .send({name: 'test driver', raceWins: 1})
         .end((err, res) => {
           putId = res.body._id;
-          console.log(res.body._id);
           done();
         });
     });
@@ -121,7 +118,6 @@ describe('testing functionality of the server', function() {
         .send({name: 'test driver', raceWins: 1})
         .end((err, res) => {
           putId2 = res.body._id;
-          console.log(res.body._id);
           done();
         });
     });
