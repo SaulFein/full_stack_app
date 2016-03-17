@@ -33,7 +33,6 @@ app.post('/ferrari-drivers', (req, res) => {
 
 app.put('/ferrari-drivers/:id', (req, res) => {
   Ferrari.findByIdAndUpdate(req.params.id, req.body, (err, fdriver) => {
-    if (err) return res.send(err);
     res.json(fdriver);
   })
 })
