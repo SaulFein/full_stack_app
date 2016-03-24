@@ -4,14 +4,14 @@ let bcrypt = require('bcrypt');
 let jwt = require('jsonwebtoken');
 
 const userSchema = new mongoose.Schema({
-  name: String,
+  name: {type: String, unique: true},
   password: String,
-  files: []
+  files: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Files' }]
 });
 
 userSchema.pre('save', function(next) {
   console.log(this.password);
-  this.password = bcrypt.hashSynch(this.password, bcrypt.genSaltSync(10));
+  this.password = bcrypt.hashSync(this.password, bcrypt.genSaltSync(10));
   next();
 });
 //userSchema.method.hashPassword

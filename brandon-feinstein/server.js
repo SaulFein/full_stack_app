@@ -4,9 +4,10 @@ let bodyParser = require('body-parser');
 let app = express();
 let mongoose = require('mongoose');
 let Users = require(__dirname + '/models/users');
-// let Files = require(__dirname + '/models/files');
+let Files = require(__dirname + '/models/files');
 let auth = require('./lib/authenticate');
 
+process.env.SECRET = process.env.SECRET || 'change me';
 
 var PORT = process.env.PORT || 3000;
 
@@ -22,7 +23,10 @@ app.get('/users', (req, res) => {
 });
 
 app.get('/users/:id', (req, res) => {
-  Users.findById(req.params.id, (err, user) => {
+  Users.findById(req.params.id)
+  .populate('files')
+  .exec(function (err, user) {
+    if (err) return console.log(err);
     res.json(user);
   });
 });
@@ -36,7 +40,7 @@ app.post('/users', (req, res) => { //create new user
   });
 });
 
-//curl -H "Content-Type: application/json" -X POST -d '{"name":"user1","password":"123"}' http://localhost:3000/users
+//curl -H "Content-Type: application/json" -X POST -d '{"name":"user2","password":"123"}' http://localhost:3000/users
 
 
 app.put('/users/:id', (req, res) => {
@@ -79,42 +83,58 @@ app.post('/login', (req, res) => {
   });
 });
 
-app.get('/login', auth);
+//curl -X POST -u user2:123 http://localhost:3000/login
 
-// app.get('/files', (req, res) => {
-//   Files.find({}, (err, files) => {
-//     res.json({data: files});
-//   });
-// });
-//
-// app.get('/files/:id', (req, res) => {
-//   Files.findById(req.params.id, (err, file) => {
-//     res.json(file);
-//   });
-// });
-//
-// app.post('/files', (req, res) => {
-//   var newFile = new Files(req.body);
-//   newFile.save((err, file) => {
-//     res.json(file);
-//   });
-// });
-//
-// app.put('/files/:id', (req, res) => {
-//   Files.findByIdAndUpdate(req.params.id, req.body, {new: true}, (err, file) => {
-//     if (err) return res.send(err);
-//     res.json(file);
-//   });
-// });
-//
-// app.delete('/files/:id', (req, res) => {
-//   Files.findById(req.params.id, (err, file) => {
-//     if (err) res.json({err: 'errors'});
-//     file.remove((err, file) => {
-//       res.json({message: 'File removed'});
-//     });
-//   });
-// });
+app.get('/login', auth, (req, res) => {
+  res.json({decoded: req.decodedToken, msg: 'user logged in!'});
+});
+
+//curl -X GET -H 'authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOiI1NmY0MjQ1MTE4NTdkM2FmMGFkMDE0NzQiLCJpYXQiOjE0NTg4NDA2ODR9.rAqzohoKLAfFCA1FaW_W4CrPWqN2Q09_DoG1YdRqkDk' http://localhost:3000/login
+
+app.get('/files', (req, res) => {
+  Files.find({}, (err, files) => {
+    res.json({data: files});
+  });
+});
+
+app.get('/files/:id', (req, res) => {
+  Files.findById(req.params.id)
+    .populate('_creator')
+    .exec(function (err, file) {
+      if (err) return console.log(err);
+      res.json(file);
+    });
+});
+
+app.post('/files', (req, res) => {
+  var newFile = new Files(req.body);
+  // console.log(req.body);
+  newFile.save((err, file) => {
+    Users.findByIdAndUpdate(req.body._creator, {$push: {files: file._id}}, {new: true}, function(err, data){
+      if (err) console.log(err);
+      res.json(file);
+    });
+    // console.log(err);
+  });
+});
+
+//curl -H "Content-Type: application/json" -X POST -d '{"_creator":56f424511857d3af0ad01474,"name":"file1","content":"Hello World!"}' http://localhost:3000/files
+
+app.put('/files/:id', (req, res) => {
+  Files.findByIdAndUpdate(req.params.id, req.body, {new: true}, (err, file) => {
+    if (err) return res.send(err);
+    res.json(file);
+  });
+});
+
+app.delete('/files/:id', (req, res) => {
+  Files.findById(req.params.id, (err, file) => {
+    if (err) res.json({err: 'errors'});
+    file.remove((err, file) => {
+      res.json({message: 'File removed'});
+    });
+  });
+});
 
 app.listen(PORT, () => {
   console.log('server started');

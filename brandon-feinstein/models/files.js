@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const fileSchema = new mongoose.Schema({
+  _creator: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   name: String,
   content: String
 });
