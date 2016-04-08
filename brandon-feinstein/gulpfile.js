@@ -58,7 +58,7 @@ gulp.task('watch', function () {
   gulp.watch('*.js', ['lint', 'test', 'build']);
 });
 
-gulp.task('bwatch', function () {
+gulp.task('buildwatch', function () {
   gulp.watch(['*.js', 'app/*.html', 'app/*.js'], ['build']);
 });
 
