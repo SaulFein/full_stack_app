@@ -1,8 +1,9 @@
 var gulp = require('gulp');
 var lint = require('gulp-eslint');
 var mocha = require('gulp-mocha');
+var webpack = require('gulp-webpack');
 
-var paths = ['lib/*.js', 'test/*.js', ];
+var paths = ['lib/*.js', 'test/*.js'];
 
 gulp.task('lint', function(){
   return gulp.src(paths)
@@ -54,5 +55,19 @@ gulp.task('test', function () {
 });
 
 gulp.task('watch', function () {
-  gulp.watch('*.js', ['lint', 'test']);
+  gulp.watch('*.js', ['lint', 'test', 'build']);
+});
+
+gulp.task('bwatch', function () {
+  gulp.watch(['*.js', 'app/*.html', 'app/*.js'], ['build']);
+});
+
+gulp.task('build', function() {
+  return gulp.src(__dirname + '/app/index.js')
+    .pipe(webpack({
+      output: {
+        filename: 'bundle.js'
+      }
+    }))
+    .pipe(gulp.dest(__dirname + '/build'));
 });

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body data-ng-app="UserApp">
+  <h1>Hell!</h1>
+  <main data-ng-init="userctrl.getUser()" data-ng-controller="UserController as userctrl">
+    <ul>
+      <li data-ng-repeat="user in userctrl.user">{{user.name}}
+        <button data-ng-click="userctrl.removeUser(user)">Delete</button>
+      </li>
+    </ul>
+    <form data-ng-submit="userctrl.createUser(newUser)">
+      <input type="text" data-ng-model="newPerson.name"/>
+      <button type="submit">New User</button>
+    </form>
+  </main>
+  <script src="/build/bundle.js"></script>
+</body>
+</html>
