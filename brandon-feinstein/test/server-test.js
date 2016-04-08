@@ -17,7 +17,7 @@ describe('testing functionality of the server', function() {
   });
   it('should GET', (done) => {
     request(port)
-      .get('/ferrari-drivers')
+      .get('/users')
       .end((err, res) => {
         expect(err).to.eql(null);
         expect(res.body).to.be.an('object');
@@ -28,8 +28,8 @@ describe('testing functionality of the server', function() {
 
   it('should POST', (done) => {
     request(port)
-      .post('/ferrari-drivers')
-      .send({name: 'test driver', raceWins: 1})
+      .post('/users')
+      .send({name: 'testUser', password: '123'})
       .end((err, res) => {
         expect(err).to.eql(null);
         expect(res.body._id).to.exist;//check for id
@@ -39,7 +39,7 @@ describe('testing functionality of the server', function() {
 
   it('should GET', (done) => {
     request(port)
-      .get('/mercedes-drivers')
+      .get('/files')
       .end((err, res) => {
         expect(err).to.eql(null);
         expect(res.body).to.be.an('object');
@@ -50,7 +50,7 @@ describe('testing functionality of the server', function() {
 
   it('should POST', (done) => {
     request(port)
-      .post('/mercedes-drivers')
+      .post('/files')
       .send({name: 'test driver', raceWins: 1})
       .end((err, res) => {
         expect(err).to.eql(null);
@@ -59,63 +59,45 @@ describe('testing functionality of the server', function() {
       });
   });
 
-  it('should GET', (done) => {
-    request(port)
-      .get('/ferr-mostwins')
-      .end((err, res) => {
-        expect(err).to.eql(null);
-        expect(res.body).to.be.an('object');
-        done();
-      });
-  });
-
-  it('should GET', (done) => {
-    request(port)
-      .get('/merc-mostwins')
-      .end((err, res) => {
-        expect(err).to.eql(null);
-        expect(res.body).to.be.an('object');
-        done();
-      });
-  });
   var putId;
   describe('test put and delete functions', function () {
     before((done) => {
       request(port)
-        .post('/ferrari-drivers')
-        .send({name: 'test driver', raceWins: 1})
+        .post('/users')
+        .send({name: 'testUser', password: '123'})
         .end((err, res) => {
           putId = res.body._id;
           done();
         });
     });
-    it('should PUT', function(done) {
-      request(port)
-        .put('/ferrari-drivers/' + putId)
-        .send({name: 'test driver', raceWins: 2})
-        .end(function (err, res) {
-          expect(err).to.eql(null);
-          expect(res.body.raceWins).to.eql(2);
-          done();
-        });
-    });
+    // it('should PUT', function(done) {
+    //   request(port)
+    //     .put('/users/' + putId)
+    //     .send({name: 'testUser', password: '231'})
+    //     .end(function (err, res) {
+    //       expect(err).to.eql(null);
+    //       console.log(res.text);
+    //       expect(res.text.password).to.eql('231');
+    //       done();
+    //     });
+    // });
 
-    it('should DELETE', (done) => {
-      request(port)
-      .delete('/ferrari-drivers/' + putId)
-      .end((err, res) => {
-        expect(err).to.eql(null);
-        expect(res.text).to.equal('{"message":"Ferrari driver removed"}');
-        done();
-      });
-    });
+    // it('should DELETE', (done) => {
+    //   request(port)
+    //   .delete('/users/' + putId)
+    //   .end((err, res) => {
+    //     expect(err).to.eql(null);
+    //     expect(res.text).to.equal('{"message":"User removed"}');
+    //     done();
+    //   });
+    // });
   });
   var putId2;
   describe('test put and delete functions', function () {
     before((done) => {
       request(port)
-        .post('/mercedes-drivers')
-        .send({name: 'test driver', raceWins: 1})
+        .post('/files')
+        .send({name: 'testFile', content: 'Hello Test'})
         .end((err, res) => {
           putId2 = res.body._id;
           done();
@@ -123,24 +105,44 @@ describe('testing functionality of the server', function() {
     });
     it('should PUT', function(done) {
       request(port)
-        .put('/mercedes-drivers/' + putId2)
-        .send({name: 'test driver', raceWins: 2})
+        .put('/files/' + putId2)
+        .send({name: 'testFile', content: 'Hello Test Put'})
         .end(function (err, res) {
           expect(err).to.eql(null);
-          expect(res.body.raceWins).to.eql(2);
+          expect(res.body.content).to.eql('Hello Test Put');
           done();
         });
     });
 
     it('should DELETE', (done) => {
       request(port)
-        .delete('/mercedes-drivers/' + putId2)
+        .delete('/files/' + putId2)
         .end((err, res) => {
           expect(err).to.eql(null);
-          expect(res.text).to.equal('{"message":"Mercedes driver removed"}');
+          expect(res.text).to.equal('{"message":"File removed"}');
           done();
         });
     });
   });
 
 });
+
+// it('should GET', (done) => {
+//   request(port)
+//     .get('/ferr-mostwins')
+//     .end((err, res) => {
+//       expect(err).to.eql(null);
+//       expect(res.body).to.be.an('object');
+//       done();
+//     });
+// });
+
+// it('should GET', (done) => {
+//   request(port)
+//     .get('/merc-mostwins')
+//     .end((err, res) => {
+//       expect(err).to.eql(null);
+//       expect(res.body).to.be.an('object');
+//       done();
+//     });
+// });
