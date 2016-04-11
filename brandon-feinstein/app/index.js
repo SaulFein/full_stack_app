@@ -18,7 +18,8 @@ app.controller('UserController', ['$http', function($http) {
     this.createUser = function(user) {
       $http.post(mainRoute, user)
         .then((res) => {
-          this.user.push(user);
+          console.log(res);
+          this.user.push(res.data);
           this.newUser = {};
         });
     };

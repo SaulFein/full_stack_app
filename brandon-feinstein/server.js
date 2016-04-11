@@ -60,7 +60,13 @@ app.put('/users/:id', (req, res) => {
 
 app.delete('/users/:id', (req, res) => {
   Users.findById(req.params.id, (err, user) => {
-    if (err) res.json({err: 'errors'});
+
+    // console.log(user);
+    if (err) return res.json({err: 'errors'});
+    if (!user){
+      console.log('user not found');
+      return res.end();
+    }
     user.remove((err, user) => {
       res.json({message: user + 'User removed'});
     });
