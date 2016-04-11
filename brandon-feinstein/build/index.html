@@ -2,24 +2,27 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
   <title>Document</title>
 </head>
 <body data-ng-app="UserApp">
-  <h1>Hello!</h1>
+  <h1 id="title">Angular Crud for Two Resource API</h1>
   <main data-ng-init="userctrl.getUser()" data-ng-controller="UserController as userctrl">
     <ul>
       <li data-ng-repeat="user in userctrl.user">{{user.name}}
-        <button data-ng-click="userctrl.removeUser(user)">Delete</button>
-        <button data-ng-click="showme=true">Edit</button>
+        <button class="btn" data-ng-click="userctrl.removeUser(user)">Delete</button>
+        <button class="btn" data-ng-click="showme=true">Edit</button>
           <form data-ng-submit="userctrl.updateUser(newUser, $index)" ng-show="showme">
             <input type="text" data-ng-model="newUser"/>
-            <button data-ng-click="showme=false" type="submit">Update</button>
+            <button class="btn" data-ng-click="showme=false" type="submit">Update</button>
           </form>
+          <button class="btn" ng-show="showme" data-ng-click="showme=false">Cancel</button>
+
       </li>
     </ul>
     <form data-ng-submit="userctrl.createUser(newUser)">
       <input type="text" data-ng-model="newUser.name"/>
-      <button type="submit">New User</button>
+      <button class="btn" type="submit">New User</button>
     </form>
   </main>
   <script src="bundle.js"></script>

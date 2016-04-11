@@ -1,3 +1,42 @@
 body {
-    background: yellow;
+    background: #1C1F26;
+}
+
+li {
+  font-family: 'Montserrat', sans-serif;
+  color: grey;
+  padding: 1%;
+}
+
+#title {
+  font-family: 'Montserrat', sans-serif;
+  color: #961227;
+}
+
+
+.btn {
+  background: #21292e;
+  background-image: -webkit-linear-gradient(top, #24262D, #13171F);
+  background-image: -moz-linear-gradient(top, #24262D, #13171F);
+  background-image: -ms-linear-gradient(top, #24262D, #13171F);
+  background-image: -o-linear-gradient(top, #24262D, #13171F);
+  background-image: linear-gradient(to bottom, #24262D, #13171F);
+  -webkit-border-radius: 28;
+  -moz-border-radius: 28;
+  border-radius: 28px;
+  font-family: Arial;
+  color: #961227;
+  font-size: 19px;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+}
+
+.btn:hover {
+  background: #3cb0fd;
+  background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+  text-decoration: none;
 }

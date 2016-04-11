@@ -30855,7 +30855,7 @@
 
 
 	// module
-	exports.push([module.id, "body {\n    background: yellow;\n}\n", ""]);
+	exports.push([module.id, "body {\n    background: #1C1F26;\n}\n\nli {\n  font-family: 'Montserrat', sans-serif;\n  color: grey;\n  padding: 1%;\n}\n\n#title {\n  font-family: 'Montserrat', sans-serif;\n  color: #961227;\n}\n\n\n.btn {\n  background: #21292e;\n  background-image: -webkit-linear-gradient(top, #24262D, #13171F);\n  background-image: -moz-linear-gradient(top, #24262D, #13171F);\n  background-image: -ms-linear-gradient(top, #24262D, #13171F);\n  background-image: -o-linear-gradient(top, #24262D, #13171F);\n  background-image: linear-gradient(to bottom, #24262D, #13171F);\n  -webkit-border-radius: 28;\n  -moz-border-radius: 28;\n  border-radius: 28px;\n  font-family: Arial;\n  color: #961227;\n  font-size: 19px;\n  padding: 10px 20px 10px 20px;\n  text-decoration: none;\n}\n\n.btn:hover {\n  background: #3cb0fd;\n  background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);\n  background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);\n  background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);\n  background-image: -o-linear-gradient(top, #3cb0fd, #3498db);\n  background-image: linear-gradient(to bottom, #3cb0fd, #3498db);\n  text-decoration: none;\n}\n", ""]);
 
 	// exports
 
