@@ -1,4 +1,5 @@
 const angular = require('angular');
+require("!style!css!./../style.css");
 
 const app = angular.module('UserApp', []);
 app.controller('UserController', ['$http', function($http) {
@@ -11,7 +12,7 @@ app.controller('UserController', ['$http', function($http) {
         this.user = result.data.data;
         console.log(result.data.data);
       }, function(error) {
-        console.log('this is an error')
+        console.log('this is an error');
       });
   };
     this.createUser = function(user) {
@@ -25,6 +26,14 @@ app.controller('UserController', ['$http', function($http) {
     $http.delete(mainRoute + '/' + user._id)
       .then((res) => {
         this.user = this.user.filter((u) => u._id != user._id);
+      });
+  };
+
+  this.updateUser = function(user) {
+    $http.put(mainRoute + '/' + user._id)
+      .then((res) => {
+        console.log(res.data.name);
+        // this.user = this.user.filter((u) => u._id != user._id);
       });
   };
 

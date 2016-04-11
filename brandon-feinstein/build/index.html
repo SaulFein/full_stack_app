@@ -10,6 +10,7 @@
     <ul>
       <li data-ng-repeat="user in userctrl.user">{{user.name}}
         <button data-ng-click="userctrl.removeUser(user)">Delete</button>
+        <button data-ng-click="userctrl.updateUser(user)">Edit</button>
       </li>
     </ul>
     <form data-ng-submit="userctrl.createUser(newUser)">
