@@ -55,11 +55,16 @@ gulp.task('test', function () {
 });
 
 gulp.task('watch', function () {
-  gulp.watch('*.js', ['lint', 'test', 'build']);
+  gulp.watch('*.js', ['lint', 'test', 'build', 'html']);
 });
 
 gulp.task('buildwatch', function () {
-  gulp.watch(['*.js', 'app/*.html', 'app/*.js'], ['build']);
+  gulp.watch(['*.js', 'app/*.html', 'app/*.js'], ['build', 'html']);
+});
+
+gulp.task('html', () => {
+  gulp.src(__dirname + '/app/**/*.html')
+    .pipe(gulp.dest(__dirname + '/build'));
 });
 
 gulp.task('build', function() {
