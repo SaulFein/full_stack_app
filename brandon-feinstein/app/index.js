@@ -30,12 +30,18 @@ app.controller('UserController', ['$http', function($http) {
       });
   };
 
-  this.updateUser = function(user) {
-    $http.put(mainRoute + '/' + user._id)
+  this.updateUser = function(name, $index) {
+    var tempName = this.user[$index].name;
+    console.log(this.user[$index].name);
+    this.user[$index].name = name;
+    $http.put(mainRoute + '/' + this.user[$index]._id, this.user[$index])
       .then((res) => {
         console.log(res.data.name);
-        // this.user = this.user.filter((u) => u._id != user._id);
-      });
+      }, (err) => {
+        console.log(err);
+        this.user = tempName;
+      }
+    );
   };
 
 }]);
