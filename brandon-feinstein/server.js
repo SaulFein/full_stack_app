@@ -11,8 +11,16 @@ process.env.SECRET = process.env.SECRET || 'change me';
 
 var PORT = process.env.PORT || 3000;
 
-let DB_PORT = process.env.MONGOLAB_URI || 'mongodb://localhost/db';
+// let DB_PORT = process.env.MONGOLAB_URI || 'mongodb://localhost/db';
+let DB_PORT = 'mongodb://localhost/db';
 mongoose.connect(DB_PORT);
+
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', 'http://localhost:8080');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  next();
+});
 
 app.use(bodyParser.json());
 

@@ -54,9 +54,10 @@
 	  this.getUser = function() {
 	    $http.get(mainRoute)
 	      .then((result) => {
-	        this.user = result.data.user;
+	        this.user = result.data.data;
+	        console.log(result.data.data);
 	      }, function(error) {
-	        console.log('this is an errors')
+	        console.log('this is an error')
 	      });
 	  };
 	    this.createUser = function(user) {
