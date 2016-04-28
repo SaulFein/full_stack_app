@@ -1,7 +1,8 @@
 const angular = require('angular');
 require("!style!css!./../style.css");
+require('angular-route');
 
-const app = angular.module('UserApp', []);
+const app = angular.module('UserApp', ['ngRoute']);
 
 app.factory('service', function() {
   return {
@@ -75,3 +76,17 @@ app.directive('apptitle', function() {
       template: '<h1>Angular Crud for Two Resource API</h1>'
   };
 });
+
+app.config(['$routeProvider', function(router) {
+  router
+    .when('/signup', {
+      controller: 'UserController',
+      controllerAs: 'userctrl',
+      templateUrl: 'views/signup_in.html'
+    })
+    .when('/home', {
+      controller: 'UserController',
+      controllerAs: 'userctrl',
+      templateUrl: 'views/home.html'
+    })
+}])

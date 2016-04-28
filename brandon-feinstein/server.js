@@ -27,6 +27,10 @@ app.use((req, res, next) => {
 
 app.use(bodyParser.json());
 
+const userRouter = require(__dirname + '/routes/user_routes');
+app.use(userRouter);
+
+
 app.get('/users', (req, res) => {
   Users.find({}, (err, users) => {
     res.json({data: users});
@@ -99,20 +103,20 @@ app.post('/login', (req, res) => {
     res.json({token: user.generateToken()});
   });
 });
+//
+// //curl -X POST -u user2:123 http://localhost:3000/login
+//
+app.get('/login', auth, (req, res) => {
+  res.json({decoded: req.decodedToken, msg: 'user logged in!'});
+});
 
-//curl -X POST -u user2:123 http://localhost:3000/login
-
-// app.get('/login', auth, (req, res) => {
-//   res.json({decoded: req.decodedToken, msg: 'user logged in!'});
-// });
-
-// app.get('/login', (req, res) => {
-//   res.json({decoded: req.decodedToken, msg: 'user logged in!'});
-// });
-
-
-//curl -X GET -H 'authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOiI1NmY0MjQ1MTE4NTdkM2FmMGFkMDE0NzQiLCJpYXQiOjE0NTg4NDA2ODR9.rAqzohoKLAfFCA1FaW_W4CrPWqN2Q09_DoG1YdRqkDk' http://localhost:3000/login
-
+app.get('/login', (req, res) => {
+  res.json({decoded: req.decodedToken, msg: 'user logged in!'});
+});
+//
+//
+// //curl -X GET -H 'authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOiI1NmY0MjQ1MTE4NTdkM2FmMGFkMDE0NzQiLCJpYXQiOjE0NTg4NDA2ODR9.rAqzohoKLAfFCA1FaW_W4CrPWqN2Q09_DoG1YdRqkDk' http://localhost:3000/login
+//
 app.get('/files', (req, res) => {
   Files.find({}, (err, files) => {
     res.json({data: files});
