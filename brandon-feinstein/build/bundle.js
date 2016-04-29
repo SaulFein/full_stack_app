@@ -53,13 +53,6 @@
 	__webpack_require__(9)(app);
 	__webpack_require__(10)(app);
 
-	// app.config(function ($httpProvider) {
-	//   $httpProvider.defaults.headers.common = {};
-	//   $httpProvider.defaults.headers.post = {};
-	//   $httpProvider.defaults.headers.put = {};
-	//   $httpProvider.defaults.headers.patch = {};
-	// });
-
 	app.factory('service', function() {
 	  return {
 	    firstUser: function (array){
@@ -32332,7 +32325,7 @@
 	        cb || function() {};
 	        $http.post(url + '/login', {},   {
 	          headers: {
-	            authorization: 'Basic ' + btoa(user.email + ':' + user.password)
+	            authorization: 'Basic ' + btoa(user.name + ':' + user.password)
 	          }
 	        }).then((res) => {
 	          token = $window.localStorage.token = res.data.token;

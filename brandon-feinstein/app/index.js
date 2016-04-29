@@ -7,13 +7,6 @@ const app = angular.module('UserApp', ['ngRoute']);
 require('./services/auth_service')(app);
 require('./services/error_service')(app);
 
-// app.config(function ($httpProvider) {
-//   $httpProvider.defaults.headers.common = {};
-//   $httpProvider.defaults.headers.post = {};
-//   $httpProvider.defaults.headers.put = {};
-//   $httpProvider.defaults.headers.patch = {};
-// });
-
 app.factory('service', function() {
   return {
     firstUser: function (array){
