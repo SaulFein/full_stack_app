@@ -1,14 +1,14 @@
 <section>
   <h1 ng-if="userctrl.error">{{userctrl.error}}</h1>
-  <form ng-submit="userctrl.signUp(newUser)">
+  <form ng-submit="userctrl.createUser(newUser)">
     <input type="text" placeholder="email" ng-model="newUser.email">
-    <input type="text" placeholder="username" ng-model="newUser.username">
+    <input type="text" placeholder="username" ng-model="newUser.name">
     <input type="password" placeholder="password" ng-model="newUser.password">
     <button type="submit">Sign Up</button>
   </form>
   <form ng-submit="userctrl.signIn(user)">
     <input type="text" placeholder="email" ng-model="user.email">
-    <input type="text" placeholder="username" ng-model="user.username">
+    <input type="text" placeholder="username" ng-model="user.name">
     <input type="password" placeholder="password" ng-model="user.password">
     <button type="submit">Sign In</button>
   </form>

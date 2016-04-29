@@ -15,21 +15,17 @@ var PORT = process.env.PORT || 3000;
 let DB_PORT = 'mongodb://localhost/db';
 mongoose.connect(DB_PORT);
 
+
+
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'http://127.0.0.1:8080');
-  res.header('Access-Control-Allow-Origin', 'http://localhost:8080');
-
-
+  res.header('Access-Control-Allow-Origin', '*');
+  // res.header('Access-Control-Allow-Origin', 'http://localhost:8080');
   res.header('Access-Control-Allow-Headers', 'Content-Type');
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
   next();
 });
 
 app.use(bodyParser.json());
-
-const userRouter = require(__dirname + '/routes/user_routes');
-app.use(userRouter);
-
 
 app.get('/users', (req, res) => {
   Users.find({}, (err, users) => {
@@ -47,8 +43,8 @@ app.get('/users/:id', (req, res) => {
 });
 
 app.post('/users', (req, res) => { //create new user
+  console.log(req.body);
   var newUser = new Users(req.body);
-  console.log(newUser);
   newUser.save((err, user) => {
     if (err) res.json({err: 'errors'});
     res.json(user);
@@ -106,9 +102,6 @@ app.post('/login', (req, res) => {
 //
 // //curl -X POST -u user2:123 http://localhost:3000/login
 //
-app.get('/login', auth, (req, res) => {
-  res.json({decoded: req.decodedToken, msg: 'user logged in!'});
-});
 
 app.get('/login', (req, res) => {
   res.json({decoded: req.decodedToken, msg: 'user logged in!'});
