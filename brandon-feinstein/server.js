@@ -20,7 +20,7 @@ mongoose.connect(DB_PORT);
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   // res.header('Access-Control-Allow-Origin', 'http://localhost:8080');
-  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, authorization, token');
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
   next();
 });
@@ -77,6 +77,7 @@ app.delete('/users/:id', (req, res) => {
 });
 
 app.post('/login', (req, res) => {
+  debugger;
   console.log(req.headers.authorization);
   let authorizationArray = req.headers.authorization.split(' ');
   let method = authorizationArray[0];
@@ -103,7 +104,7 @@ app.post('/login', (req, res) => {
 // //curl -X POST -u user2:123 http://localhost:3000/login
 //
 
-app.get('/login', (req, res) => {
+app.get('/login', auth, (req, res) => {
   res.json({decoded: req.decodedToken, msg: 'user logged in!'});
 });
 //

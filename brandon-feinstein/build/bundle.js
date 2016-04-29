@@ -32330,7 +32330,7 @@
 	      },
 	      signIn(user, cb) {
 	        cb || function() {};
-	        $http.get(url + '/signin', {
+	        $http.post(url + '/login', {},   {
 	          headers: {
 	            authorization: 'Basic ' + btoa(user.email + ':' + user.password)
 	          }
